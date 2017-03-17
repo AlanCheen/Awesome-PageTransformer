@@ -26,7 +26,11 @@ public class AlphaPageTransformer extends BasePageTransformer {
     private Transformer mAlphaTransformer;
 
     public AlphaPageTransformer() {
-        mAlphaTransformer = new AlphaTransformer();
+        this(0f, 1f);
+    }
+
+    public AlphaPageTransformer(float minAlpha,float maxAlpha) {
+        mAlphaTransformer = new AlphaTransformer(minAlpha,maxAlpha);
     }
 
     @Override

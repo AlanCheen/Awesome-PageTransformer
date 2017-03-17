@@ -1,26 +1,26 @@
 package me.yifeiyuan.pagetransformer;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import me.yifeiyuan.transformers.AlphaPageTransformer;
+import me.yifeiyuan.transformers.ZoomOutPageTransformer;
 
 public class MainActivity extends AppCompatActivity {
 
 
-    ViewPager vp;
+    ViewPager mVp;
+    ViewPager mVp2;
     Context mContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,39 +38,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        vp = (ViewPager) findViewById(R.id.vp);
-        vp.setAdapter(new PagerAdapter() {
-            @Override
-            public int getCount() {
-                return 10;
-            }
+        mVp = (ViewPager) findViewById(R.id.vp);
+        mVp.setAdapter(new SimplePagerAdapter(mContext));
+        mVp.setPageTransformer(false,new AlphaPageTransformer(0.2f,0.3f));
 
-            @Override
-            public boolean isViewFromObject(View view, Object object) {
-                return view==object;
-            }
-
-            @Override
-            public Object instantiateItem(ViewGroup container, int position) {
-                View v =  new View(mContext);
-//                v.setLayoutParams(new ViewPager.LayoutParams());
-                v.setPadding(20,0,20,0);
-                if (position % 2 == 0) {
-                    v.setBackgroundColor(Color.parseColor("#00ff00"));
-                }else{
-                    v.setBackgroundColor(Color.parseColor("#00ffff"));
-                }
-                container.addView(v);
-                return v;
-            }
-
-            @Override
-            public void destroyItem(ViewGroup container, int position, Object object) {
-//                super.destroyItem(container, position, object);
-                container.removeView((View) object);
-            }
-        });
-        vp.setPageTransformer(false,new AlphaPageTransformer());
+        mVp2 = (ViewPager) findViewById(R.id.vp2);
+        mVp2.setAdapter(new SimplePagerAdapter(mContext));
+        mVp2.setPageTransformer(false,new ZoomOutPageTransformer());
+        mVp2.setPageMargin(10);
+        mVp2.setOffscreenPageLimit(2);
+        mVp2.setCurrentItem(1);
     }
 
 
@@ -91,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.alpha) {
+            mVp.setPageTransformer(false, new AlphaPageTransformer(0.3f,0.8f));
             return true;
         }
 

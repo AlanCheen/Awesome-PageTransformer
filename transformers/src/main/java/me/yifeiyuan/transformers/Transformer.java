@@ -18,6 +18,7 @@ public interface Transformer {
 
     /**
      * 在左边第一个屏幕以及手机屏幕之间移动
+     * [-1,0]
      *
      * @param page
      * @param position [-1,0]
@@ -26,6 +27,7 @@ public interface Transformer {
 
     /**
      * 在右边第一个屏幕以及手机屏幕之间移动
+     * (0,1]
      *
      * @param page
      * @param position (0,1]

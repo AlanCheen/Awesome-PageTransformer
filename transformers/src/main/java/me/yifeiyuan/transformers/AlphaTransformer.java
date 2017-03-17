@@ -25,6 +25,16 @@ import android.view.View;
  */
 public class AlphaTransformer implements Transformer {
 
+    private float mMinAlpha;
+    private float mMaxAlpha;
+
+    public AlphaTransformer() {
+        this(0f, 1f);
+    }
+    public AlphaTransformer(float minAlpha,float maxAlpha) {
+        mMinAlpha = minAlpha;
+        mMaxAlpha = maxAlpha;
+    }
     @Override
     public void onScreenOffToLeft(View page, float position) {
         page.setAlpha(0f);
@@ -32,12 +42,14 @@ public class AlphaTransformer implements Transformer {
 
     @Override
     public void onLeftRange(View page, float position) {
-        page.setAlpha(1 + position);
+//        page.setAlpha(Math.min(mMaxAlpha,(mMaxAlpha + mMinAlpha) * Math.abs(position)));
+        page.setAlpha(1+position);
     }
 
     @Override
     public void onRightRange(View page, float position) {
-        page.setAlpha(1 - position);
+//        page.setAlpha(mMaxAlpha - position);
+        page.setAlpha(1-position);
     }
 
     @Override
